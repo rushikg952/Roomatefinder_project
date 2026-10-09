@@ -1,0 +1,25 @@
+{
+  "name": "roommate-finder-rcpit",
+  "version": "1.0.0",
+  "description": "Roommate Finder System for RCPIT Shirpur Students",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "test": "node test/test_suite.js"
+  },
+  "keywords": [
+    "roommate-finder",
+    "rcpit",
+    "shirpur",
+    "student-housing"
+  ],
+  "author": "RCPIT Students",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

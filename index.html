@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roommate Finder System – RCPIT Shirpur</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="#home" class="logo" id="nav-logo" data-view="home">
+        <span class="logo-icon">🏠</span>
+        <span class="logo-text">Roommate<strong>Finder</strong> <small class="college-tag">RCPIT Shirpur</small></span>
+      </a>
+
+      <!-- Mobile Navigation Hamburger -->
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#home" class="nav-link active" data-view="home">Home</a>
+        <a href="#search" class="nav-link" data-view="search">Find Roommates</a>
+        <a href="#listings" class="nav-link" data-view="listings">Room Listings</a>
+        <a href="#dashboard" class="nav-link auth-required hidden" data-view="dashboard" id="nav-dashboard-link">
+          Dashboard <span class="badge-pill hidden" id="unread-nav-badge">0</span>
+        </a>
+
+        <!-- Auth Section in Navbar -->
+        <div class="nav-auth" id="nav-auth-container">
+          <button class="btn btn-primary btn-sm" id="nav-login-btn">Sign In / Register</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Global Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <main>
+    <!-- ==================== SECTION 1: HOME / LANDING ==================== -->
+    <section id="view-home" class="view-section active">
+      <div class="hero-section">
+        <div class="container hero-container">
+          <div class="hero-content">
+            <span class="pill-badge">🎓 R. C. Patel Institute of Technology, Shirpur</span>
+            <h1 class="hero-title">Find Compatible Flatmates & Hostels With Zero Stress.</h1>
+            <p class="hero-desc">
+              Connect with fellow RCPIT students based on your monthly budget, Karvand/Nimzari Naka location, study habits, and dietary lifestyle. Real compatibility scores — no awkward flatmate clashes.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="hero-find-btn" data-view="search">
+                🔍 Find a Roommate
+              </button>
+              <button class="btn btn-secondary" id="hero-listings-btn" data-view="listings">
+                🏠 Browse Room Listings
+              </button>
+              <button class="btn btn-outline" id="hero-create-btn">
+                ✏️ Post a Listing
+              </button>
+            </div>
+
+            <!-- Real-time database stats -->
+            <div class="hero-stats" id="hero-live-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="stat-students">--</span>
+                <span class="stat-label">RCPIT Students</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="stat-listings">--</span>
+                <span class="stat-label">Active Listings</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="stat-verified">--</span>
+                <span class="stat-label">Verified Profiles</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="stat-messages">--</span>
+                <span class="stat-label">Peer Messages</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card-preview">
+            <div class="preview-badge">✨ Top Match For You</div>
+            <div class="preview-avatar">🌸</div>
+            <div class="preview-name-row">
+              <h3>Maya Patel, 21</h3>
+              <span class="badge-verified" title="Verified RCPIT Student PRN">✓ Verified Student</span>
+            </div>
+            <p class="preview-loc">📍 Karvand Naka, Shirpur</p>
+            <div class="match-score-pill">
+              <span class="match-score-val">94%</span> Compatible
+            </div>
+            <div class="preview-tags">
+              <span class="tag">₹4,500/mo</span>
+              <span class="tag">Pure Veg</span>
+              <span class="tag">Early Riser</span>
+              <span class="tag">Quiet Solo Study</span>
+            </div>
+            <p class="preview-quote">"Final year Computer Engg. Very tidy, loves making chai, keeps weeknights quiet for coding."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Highlights -->
+      <section class="features-section">
+        <div class="container">
+          <h2 class="section-title text-center">Engineered for RCPIT Shirpur Students</h2>
+          <p class="section-subtitle text-center">Smart tools tailored for campus hostels, flats, and mess accommodations.</p>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">🧠</div>
+              <h3>Real Compatibility Algorithm</h3>
+              <p>Scores compatibility across Budget (25%), Location (20%), Food (15%), Sleep (15%), Study (15%), and Lifestyle (10%).</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🛡️</div>
+              <h3>Student PRN Verification</h3>
+              <p>Verify your enrollment through your university PRN number to get the official <strong>Verified Student</strong> badge.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💬</div>
+              <h3>In-App Direct Messaging</h3>
+              <p>Chat directly with flatmates without exposing your personal phone number until you feel comfortable.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📌</div>
+              <h3>Listing Management</h3>
+              <p>Easily post room openings, toggle availability when occupied, and receive direct inquiries.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">❤️</div>
+              <h3>Persistent Favorites</h3>
+              <p>Bookmark your favorite rooms and candidate profiles to compare options before finalizing.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🚨</div>
+              <h3>Report & Safety Controls</h3>
+              <p>Community moderation tools allow reporting misleading listings or behavior to campus admins.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ==================== SECTION 2: ROOMMATE & LISTING SEARCH ==================== -->
+    <section id="view-search" class="view-section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h1 class="page-heading">Browse Roommate Profiles</h1>
+            <p class="page-subheading">Find students looking for flatmates near RCPIT Shirpur campus.</p>
+          </div>
+          <div class="header-action-group">
+            <button class="btn btn-outline" id="switch-to-listings-btn" data-view="listings">🏢 View Room Listings</button>
+            <button class="btn btn-primary" id="open-create-listing-btn">+ Post a Listing</button>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-card">
+          <div class="filter-row-primary">
+            <div class="filter-group flex-2">
+              <label for="filter-keyword">Search Keyword / Major</label>
+              <input type="text" id="filter-keyword" class="form-control" placeholder="Search by name, branch, interests...">
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-location">Location / Area</label>
+              <select id="filter-location" class="form-control">
+                <option value="all">All Shirpur Areas</option>
+                <option value="Karvand Naka">Karvand Naka</option>
+                <option value="Nimzari Naka">Nimzari Naka</option>
+                <option value="College Road">College Road</option>
+                <option value="Subhash Nagar">Subhash Nagar</option>
+                <option value="Main Road">Main Road</option>
+                <option value="Shirpur">Shirpur (General)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-gender">Gender</label>
+              <select id="filter-gender" class="form-control">
+                <option value="all">All Genders</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Non-binary">Non-binary</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-sort">Sort By</label>
+              <select id="filter-sort" class="form-control">
+                <option value="compatibility">Highest Compatibility</option>
+                <option value="budget_asc">Budget: Low to High</option>
+                <option value="budget_desc">Budget: High to Low</option>
+                <option value="age_asc">Age: Youngest First</option>
+                <option value="newest">Newest Added</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Extended Lifestyle Filter Row -->
+          <div class="filter-row-secondary">
+            <div class="filter-group">
+              <label for="filter-food">Diet / Food Habit</label>
+              <select id="filter-food" class="form-control">
+                <option value="all">All Diets</option>
+                <option value="Pure Veg">Pure Veg</option>
+                <option value="Non-Veg">Non-Veg</option>
+                <option value="Eggetarian">Eggetarian</option>
+                <option value="Jain">Jain</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-sleep">Sleep Schedule</label>
+              <select id="filter-sleep" class="form-control">
+                <option value="all">All Schedules</option>
+                <option value="Early Riser">Early Riser</option>
+                <option value="Night Owl">Night Owl</option>
+                <option value="Flexible">Flexible / Moderate</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-study">Study Habit</label>
+              <select id="filter-study" class="form-control">
+                <option value="all">All Habits</option>
+                <option value="Quiet Solo">Quiet Solo Study</option>
+                <option value="Group Study">Group Study</option>
+                <option value="Library">Library Goer</option>
+                <option value="Flexible">Flexible</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-lifestyle">Lifestyle</label>
+              <select id="filter-lifestyle" class="form-control">
+                <option value="all">All Lifestyles</option>
+                <option value="Neat & Organized">Neat & Organized</option>
+                <option value="Social & Active">Social & Active</option>
+                <option value="Focused Student">Focused Student</option>
+              </select>
+            </div>
+
+            <div class="filter-group filter-checkbox-group">
+              <label class="checkbox-label" for="filter-verified">
+                <input type="checkbox" id="filter-verified">
+                <span>Verified Students Only</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-row-budget">
+            <div class="filter-group flex-1">
+              <label for="filter-budget">
+                Max Monthly Budget: <strong id="budget-value-display">₹10,000/mo</strong>
+              </label>
+              <input type="range" id="filter-budget" min="2000" max="15000" step="250" value="10000" class="range-slider">
+            </div>
+
+            <div class="filter-actions">
+              <button id="reset-filters-btn" class="btn btn-secondary btn-sm">Reset Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Counter & Grid -->
+        <div class="results-header">
+          <span id="results-count" class="results-count">Loading roommates...</span>
+          <div id="auth-hint-banner" class="auth-hint-banner hidden">
+            <span>💡 <strong>Sign in</strong> with your student account to see personalized compatibility scores based on your habits!</span>
+            <button class="btn btn-outline btn-xs" id="hint-login-btn">Sign In</button>
+          </div>
+        </div>
+
+        <div id="roommates-grid" class="roommates-grid">
+          <!-- Roommate cards are injected dynamically via script.js -->
+        </div>
+
+        <!-- No Results Fallback -->
+        <div id="no-results" class="no-results hidden">
+          <div class="no-results-icon">🔎</div>
+          <h3>No matching roommates found</h3>
+          <p>Try broadening your filters or increasing your maximum budget threshold.</p>
+          <button id="no-results-reset-btn" class="btn btn-primary btn-sm">Clear Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: ROOM LISTINGS VIEW ==================== -->
+    <section id="view-listings" class="view-section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h1 class="page-heading">Available Rooms, Flats & PGs</h1>
+            <p class="page-subheading">Accommodations posted by RCPIT students seeking flatmates.</p>
+          </div>
+          <button class="btn btn-primary" id="listings-view-create-btn">+ Post a Listing</button>
+        </div>
+
+        <!-- Listings Filter Bar -->
+        <div class="filter-card filter-card-compact">
+          <div class="filter-row-primary">
+            <div class="filter-group flex-2">
+              <label for="listing-filter-keyword">Search Listings</label>
+              <input type="text" id="listing-filter-keyword" class="form-control" placeholder="Search by apartment name, area, amenities...">
+            </div>
+            <div class="filter-group">
+              <label for="listing-filter-type">Room Type</label>
+              <select id="listing-filter-type" class="form-control">
+                <option value="all">All Room Types</option>
+                <option value="Shared 2-sharing">Shared 2-sharing</option>
+                <option value="Shared 3-sharing">Shared 3-sharing</option>
+                <option value="1 BHK">1 BHK</option>
+                <option value="2 BHK">2 BHK</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="listing-filter-gender">Preferred Tenant</label>
+              <select id="listing-filter-gender" class="form-control">
+                <option value="all">Any Gender</option>
+                <option value="Female">Female only</option>
+                <option value="Male">Male only</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="listing-filter-sort">Sort By</label>
+              <select id="listing-filter-sort" class="form-control">
+                <option value="newest">Newest First</option>
+                <option value="budget_asc">Rent: Low to High</option>
+                <option value="budget_desc">Rent: High to Low</option>
+                <option value="compatibility">Compatibility</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-header">
+          <span id="listings-results-count" class="results-count">Loading listings...</span>
+        </div>
+
+        <div id="listings-grid" class="listings-grid">
+          <!-- Room listings injected dynamically -->
+        </div>
+
+        <div id="no-listings-found" class="no-results hidden">
+          <div class="no-results-icon">🏠</div>
+          <h3>No room listings match your search</h3>
+          <p>Try clearing your search terms or posting a new room listing.</p>
+          <button id="no-listings-reset-btn" class="btn btn-primary btn-sm">Reset Search</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: STUDENT DASHBOARD ==================== -->
+    <section id="view-dashboard" class="view-section">
+      <div class="container dashboard-container">
+        <div class="dashboard-sidebar">
+          <div class="dashboard-user-card">
+            <div class="user-card-avatar" id="dash-sidebar-avatar">👤</div>
+            <h3 id="dash-sidebar-name">Student Name</h3>
+            <p id="dash-sidebar-dept">Department</p>
+            <div id="dash-sidebar-badge-wrap">
+              <span class="badge-verified" id="dash-sidebar-badge">✓ Verified Student</span>
+            </div>
+          </div>
+
+          <nav class="dashboard-nav">
+            <button class="dash-nav-btn active" data-tab="tab-profile">
+              <span class="dash-icon">👤</span> My Profile
+            </button>
+            <button class="dash-nav-btn" data-tab="tab-edit-profile">
+              <span class="dash-icon">✏️</span> Edit Profile
+            </button>
+            <button class="dash-nav-btn" data-tab="tab-my-listings">
+              <span class="dash-icon">🏠</span> My Listings
+            </button>
+            <button class="dash-nav-btn" data-tab="tab-favorites">
+              <span class="dash-icon">❤️</span> Favorites (<span id="dash-fav-count">0</span>)
+            </button>
+            <button class="dash-nav-btn" data-tab="tab-messages">
+              <span class="dash-icon">💬</span> Messages <span class="badge-pill hidden" id="dash-msg-count">0</span>
+            </button>
+            <button class="dash-nav-btn" data-tab="tab-verification">
+              <span class="dash-icon">🛡️</span> Student Verification
+            </button>
+            <button class="dash-nav-btn hidden" data-tab="tab-admin" id="dash-admin-nav-btn">
+              <span class="dash-icon">⚙️</span> Admin Controls
+            </button>
+            <button class="dash-nav-btn dash-logout-btn" id="dash-logout-btn">
+              <span class="dash-icon">🚪</span> Logout
+            </button>
+          </nav>
+        </div>
+
+        <div class="dashboard-content">
+          <!-- Tab 1: My Profile Overview -->
+          <div class="dash-tab-pane active" id="tab-profile">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>My Student Profile</h2>
+                <button class="btn btn-outline btn-sm" id="jump-to-edit-btn">Edit Details</button>
+              </div>
+
+              <div class="profile-summary-grid">
+                <div class="summary-item">
+                  <span class="summary-label">Full Name</span>
+                  <strong id="dash-sum-name">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">RCPIT College Email</span>
+                  <strong id="dash-sum-email">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Student PRN</span>
+                  <strong id="dash-sum-prn">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Department & Year</span>
+                  <strong id="dash-sum-dept">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Age & Gender</span>
+                  <strong id="dash-sum-gender">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Preferred Location</span>
+                  <strong id="dash-sum-location">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Monthly Budget</span>
+                  <strong id="dash-sum-budget">--</strong>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Phone / WhatsApp</span>
+                  <strong id="dash-sum-phone">--</strong>
+                </div>
+              </div>
+
+              <div class="dash-section-divider"></div>
+              <h3>Living & Habit Preferences</h3>
+              <div class="lifestyle-badges-row">
+                <div class="habit-badge-item">
+                  <span class="habit-icon">🥗</span>
+                  <div>
+                    <small>Food Preference</small>
+                    <strong id="dash-sum-food">--</strong>
+                  </div>
+                </div>
+                <div class="habit-badge-item">
+                  <span class="habit-icon">🌙</span>
+                  <div>
+                    <small>Sleep Schedule</small>
+                    <strong id="dash-sum-sleep">--</strong>
+                  </div>
+                </div>
+                <div class="habit-badge-item">
+                  <span class="habit-icon">📚</span>
+                  <div>
+                    <small>Study Habit</small>
+                    <strong id="dash-sum-study">--</strong>
+                  </div>
+                </div>
+                <div class="habit-badge-item">
+                  <span class="habit-icon">✨</span>
+                  <div>
+                    <small>Lifestyle Vibe</small>
+                    <strong id="dash-sum-lifestyle">--</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-section-divider"></div>
+              <h3>About Me / Bio</h3>
+              <p class="dash-bio-text" id="dash-sum-bio">--</p>
+            </div>
+          </div>
+
+          <!-- Tab 2: Edit Profile -->
+          <div class="dash-tab-pane" id="tab-edit-profile">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>Edit Profile & Living Habits</h2>
+                <p>Keep your habits updated to get the most accurate compatibility scores.</p>
+              </div>
+
+              <form id="edit-profile-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-name">Full Name <span class="req">*</span></label>
+                    <input type="text" id="edit-name" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-phone">Contact Phone / WhatsApp</label>
+                    <input type="text" id="edit-phone" class="form-control" placeholder="+91 98765 43210">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-age">Age <span class="req">*</span></label>
+                    <input type="number" id="edit-age" class="form-control" min="17" max="40" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-gender">Gender <span class="req">*</span></label>
+                    <select id="edit-gender" class="form-control" required>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                      <option value="Non-binary">Non-binary</option>
+                      <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-dept">Department / Branch</label>
+                    <select id="edit-dept" class="form-control">
+                      <option value="Computer Engineering">Computer Engineering</option>
+                      <option value="Information Technology">Information Technology</option>
+                      <option value="AI & Data Science">AI & Data Science</option>
+                      <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                      <option value="Mechanical Engineering">Mechanical Engineering</option>
+                      <option value="Civil Engineering">Civil Engineering</option>
+                      <option value="Electrical Engineering">Electrical Engineering</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-year">Year of Study</label>
+                    <select id="edit-year" class="form-control">
+                      <option value="First Year">First Year</option>
+                      <option value="Second Year">Second Year</option>
+                      <option value="Third Year">Third Year</option>
+                      <option value="Final Year">Final Year</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-location">Preferred Area in Shirpur <span class="req">*</span></label>
+                    <input type="text" id="edit-location" class="form-control" placeholder="e.g. Karvand Naka, Shirpur" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-budget">Monthly Budget (₹ INR) <span class="req">*</span></label>
+                    <input type="number" id="edit-budget" class="form-control" min="1500" max="30000" step="100" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-food">Food / Dietary Habit</label>
+                    <select id="edit-food" class="form-control">
+                      <option value="Pure Veg">Pure Veg</option>
+                      <option value="Non-Veg">Non-Veg</option>
+                      <option value="Eggetarian">Eggetarian</option>
+                      <option value="Jain">Jain</option>
+                      <option value="Any">Any / Flexible</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-sleep">Sleep Schedule</label>
+                    <select id="edit-sleep" class="form-control">
+                      <option value="Early Riser & Quiet">Early Riser & Quiet</option>
+                      <option value="Night Owl & Studious">Night Owl & Studious</option>
+                      <option value="Flexible / Moderate">Flexible / Moderate</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="edit-study">Study Preference</label>
+                    <select id="edit-study" class="form-control">
+                      <option value="Quiet Solo Study">Quiet Solo Study</option>
+                      <option value="Group Study / Discussion">Group Study / Discussion</option>
+                      <option value="Library Goer">Library Goer</option>
+                      <option value="Flexible / Music on Headphones">Flexible / Music on Headphones</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-lifestyle">Primary Lifestyle Vibe</label>
+                    <select id="edit-lifestyle" class="form-control">
+                      <option value="Neat & Organized">Neat & Organized</option>
+                      <option value="Social & Active">Social & Active</option>
+                      <option value="Focused Student / Hybrid Work">Focused Student / Hybrid Work</option>
+                      <option value="Pet-Friendly & Relaxed">Pet-Friendly & Relaxed</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="edit-bio">Short Bio & Roommate Expectations</label>
+                  <textarea id="edit-bio" class="form-control" rows="3" placeholder="Tell potential roommates about yourself, your cleanliness, schedule, and expectations..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" id="save-profile-btn">💾 Save Profile Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Tab 3: My Room Listings -->
+          <div class="dash-tab-pane" id="tab-my-listings">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>My Roommate Listings</h2>
+                <button class="btn btn-primary btn-sm" id="dash-create-listing-btn">+ Add New Room Listing</button>
+              </div>
+
+              <div id="my-listings-container">
+                <p class="text-muted">Loading your listings...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Favorites -->
+          <div class="dash-tab-pane" id="tab-favorites">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>Saved Favorites & Bookmarks</h2>
+                <p>Saved listings and roommate candidates stored in SQLite database.</p>
+              </div>
+
+              <div id="favorites-grid" class="favorites-grid">
+                <p class="text-muted">Loading favorites...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 5: Messages -->
+          <div class="dash-tab-pane" id="tab-messages">
+            <div class="dash-card chat-card-wrapper">
+              <div class="chat-sidebar">
+                <div class="chat-sidebar-header">
+                  <h3>Conversations</h3>
+                </div>
+                <div class="conversations-list" id="conversations-list">
+                  <p class="text-muted p-3">No conversations yet.</p>
+                </div>
+              </div>
+
+              <div class="chat-main" id="chat-main-container">
+                <div class="chat-empty-state" id="chat-empty-state">
+                  <span class="chat-empty-icon">💬</span>
+                  <h3>Select a conversation</h3>
+                  <p>Choose a student on the left or click "Contact Roommate" on any listing to start chatting.</p>
+                </div>
+
+                <div class="chat-active-box hidden" id="chat-active-box">
+                  <div class="chat-header">
+                    <div class="chat-partner-info">
+                      <div class="chat-avatar" id="chat-partner-avatar">👤</div>
+                      <div>
+                        <h4 id="chat-partner-name">Partner Name</h4>
+                        <span id="chat-partner-dept" class="text-muted">Branch</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="chat-messages-body" id="chat-messages-body">
+                    <!-- Message bubbles injected here -->
+                  </div>
+
+                  <form class="chat-input-bar" id="chat-send-form">
+                    <input type="text" id="chat-input-text" class="form-control" placeholder="Type your message..." autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary" id="chat-send-btn">Send 🚀</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 6: Student Verification -->
+          <div class="dash-tab-pane" id="tab-verification">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>RCPIT Student PRN Verification</h2>
+                <p>Get recognized as a genuine RCPIT student with our verified community badge.</p>
+              </div>
+
+              <div class="verification-status-box" id="verification-status-box">
+                <!-- Injected via script.js -->
+              </div>
+
+              <div class="verification-form-wrap" id="verification-form-wrap">
+                <form id="verification-form">
+                  <div class="form-group">
+                    <label for="verify-prn">University PRN Number <span class="req">*</span></label>
+                    <input type="text" id="verify-prn" class="form-control" placeholder="e.g. 2022019876 (8-16 digits)" required>
+                    <small class="text-muted">Enter your official college enrollment PRN found on your ID card or exam hall ticket.</small>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="verify-dept">Engineering Department</label>
+                      <select id="verify-dept" class="form-control">
+                        <option value="Computer Engineering">Computer Engineering</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="AI & Data Science">AI & Data Science</option>
+                        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="verify-year">Current Year</label>
+                      <select id="verify-year" class="form-control">
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Final Year">Final Year</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="disclaimer-alert">
+                    ℹ️ <strong>Transparency Note:</strong> This verifies enrollment ID format and peer accountability on the Roommate Finder platform. It is not an official endorsement from the RCPIT administration.
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submit-verify-btn">🛡️ Verify My PRN</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 7: Admin Controls (Visible for admin only) -->
+          <div class="dash-tab-pane" id="tab-admin">
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h2>Admin Moderation & Overview</h2>
+                <span class="badge-admin">RCPIT Platform Admin</span>
+              </div>
+
+              <div class="admin-stats-row" id="admin-stats-row">
+                <!-- Admin stats injected -->
+              </div>
+
+              <div class="dash-section-divider"></div>
+              <h3>Community Moderation Reports</h3>
+              <div class="table-responsive">
+                <table class="admin-table" id="admin-reports-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Reporter</th>
+                      <th>Type</th>
+                      <th>Target ID</th>
+                      <th>Reason</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-reports-body">
+                    <!-- Reports injected -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="dash-section-divider"></div>
+              <h3>Registered Students</h3>
+              <div class="table-responsive">
+                <table class="admin-table" id="admin-users-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>PRN</th>
+                      <th>Verified</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-users-body">
+                    <!-- Users injected -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== AUTH MODAL (LOGIN / REGISTER) ==================== -->
+  <div id="auth-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog modal-dialog-md">
+      <button class="modal-close" id="auth-modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" id="tab-btn-login">Sign In</button>
+        <button class="modal-tab-btn" id="tab-btn-register">Register New Account</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="auth-alert" class="alert hidden"></div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email or PRN <span class="req">*</span></label>
+            <input type="text" id="login-email" class="form-control" placeholder="e.g. maya.patel@rcpit.ac.in or 2021012345" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password <span class="req">*</span></label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <div class="form-actions mt-3">
+            <button type="submit" class="btn btn-primary btn-block" id="login-submit-btn">Sign In</button>
+          </div>
+
+          <p class="auth-demo-hint">
+            <strong>Demo Accounts:</strong><br>
+            • Student: <code>maya.patel@rcpit.ac.in</code> / <code>password123</code><br>
+            • Admin: <code>admin@rcpit.ac.in</code> / <code>admin123</code>
+          </p>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="hidden">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-name">Full Name <span class="req">*</span></label>
+              <input type="text" id="reg-name" class="form-control" placeholder="e.g. Rohan Gaikwad" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-email">College Email <span class="req">*</span></label>
+              <input type="email" id="reg-email" class="form-control" placeholder="name@rcpit.ac.in" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-password">Password (min 6 chars) <span class="req">*</span></label>
+              <input type="password" id="reg-password" class="form-control" placeholder="••••••••" minlength="6" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-prn">RCPIT PRN (Optional)</label>
+              <input type="text" id="reg-prn" class="form-control" placeholder="e.g. 2022017765">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-gender">Gender <span class="req">*</span></label>
+              <select id="reg-gender" class="form-control" required>
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reg-age">Age <span class="req">*</span></label>
+              <input type="number" id="reg-age" class="form-control" min="17" max="40" value="20" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-dept">Department</label>
+              <select id="reg-dept" class="form-control">
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="AI & Data Science">AI & Data Science</option>
+                <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reg-budget">Max Budget (₹/mo)</label>
+              <input type="number" id="reg-budget" class="form-control" value="5000" min="2000" max="25000">
+            </div>
+          </div>
+
+          <div class="form-actions mt-3">
+            <button type="submit" class="btn btn-primary btn-block" id="reg-submit-btn">Create Student Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PROFILE DETAILS MODAL ==================== -->
+  <div id="profile-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <button id="modal-close-btn" class="modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <div id="modal-avatar" class="modal-avatar">👤</div>
+        <div>
+          <div class="modal-title-wrap">
+            <h2 id="modal-name" class="modal-title">Roommate Name</h2>
+            <span id="modal-verified-badge" class="badge-verified hidden">✓ Verified Student</span>
+          </div>
+          <p id="modal-location" class="modal-subtitle">📍 Location</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <!-- Compatibility Breakdown Widget -->
+        <div id="modal-compatibility-box" class="compatibility-box">
+          <div class="comp-box-header">
+            <h4>Compatibility Score</h4>
+            <div class="comp-score-large" id="modal-comp-score">--%</div>
+          </div>
+          <div class="comp-bars-grid" id="modal-comp-bars">
+            <!-- Injected bars -->
+          </div>
+        </div>
+
+        <div class="modal-badges">
+          <div class="detail-pill">
+            <span class="pill-label">Monthly Budget</span>
+            <strong id="modal-budget" class="pill-value">₹0/mo</strong>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-label">Gender</span>
+            <strong id="modal-gender" class="pill-value">-</strong>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-label">Department</span>
+            <strong id="modal-dept" class="pill-value">-</strong>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-label">Diet Habit</span>
+            <strong id="modal-food" class="pill-value">-</strong>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-label">Sleep Schedule</span>
+            <strong id="modal-sleep" class="pill-value">-</strong>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-label">Study Preference</span>
+            <strong id="modal-study" class="pill-value">-</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>About Me</h3>
+          <p id="modal-bio" class="modal-bio-text">Bio description...</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-contact-btn" class="btn btn-primary">✉️ Send Message</button>
+        <button id="modal-fav-btn" class="btn btn-outline">❤️ Add Favorite</button>
+        <button id="modal-report-btn" class="btn btn-text text-danger">🚨 Report</button>
+        <button id="modal-dismiss-btn" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CREATE / EDIT LISTING MODAL ==================== -->
+  <div id="listing-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog modal-dialog-md">
+      <button id="listing-modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <div>
+          <h2 id="listing-modal-title" class="modal-title">Post a Room Listing</h2>
+          <p class="modal-subtitle">Share room opening details with fellow RCPIT students.</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form id="listing-form">
+          <input type="hidden" id="listing-edit-id" value="">
+
+          <div class="form-group">
+            <label for="listing-title">Listing Title <span class="req">*</span></label>
+            <input type="text" id="listing-title" class="form-control" placeholder="e.g. Abhilata Building – 2 Sharing Room Near Karvand Naka" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-location">Area / Location in Shirpur <span class="req">*</span></label>
+              <input type="text" id="listing-location" class="form-control" placeholder="e.g. Karvand Naka, Shirpur" required>
+            </div>
+            <div class="form-group">
+              <label for="listing-budget">Monthly Rent per Person (₹) <span class="req">*</span></label>
+              <input type="number" id="listing-budget" class="form-control" placeholder="4500" min="1500" max="30000" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="listing-room-type">Room Type <span class="req">*</span></label>
+              <select id="listing-room-type" class="form-control" required>
+                <option value="Shared 2-sharing">Shared 2-sharing</option>
+                <option value="Shared 3-sharing">Shared 3-sharing</option>
+                <option value="Single Room">Single Room</option>
+                <option value="1 BHK">1 BHK</option>
+                <option value="2 BHK">2 BHK</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="listing-pref-gender">Preferred Tenant Gender</label>
+              <select id="listing-pref-gender" class="form-control">
+                <option value="Any">Any / No preference</option>
+                <option value="Female only">Female only</option>
+                <option value="Male only">Male only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="listing-amenities">Amenities Provided</label>
+            <input type="text" id="listing-amenities" class="form-control" placeholder="e.g. WiFi, RO Water, Inverter Backup, Study Table, Bike Parking">
+          </div>
+
+          <div class="form-group">
+            <label for="listing-desc">Room Description & Rules</label>
+            <textarea id="listing-desc" class="form-control" rows="3" placeholder="Describe room size, ventilation, distance to college gate, water supply, and house rules..."></textarea>
+          </div>
+
+          <div class="form-actions mt-3">
+            <button type="submit" class="btn btn-primary btn-block" id="listing-submit-btn">Save & Publish Listing</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SEND MESSAGE MODAL ==================== -->
+  <div id="message-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <button id="message-modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Send Message to <span id="msg-recipient-name">Peer</span></h2>
+          <p class="modal-subtitle">Start an in-app conversation to discuss accommodation details.</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form id="direct-message-form">
+          <input type="hidden" id="msg-recipient-id" value="">
+          <input type="hidden" id="msg-listing-id" value="">
+
+          <div class="form-group">
+            <label for="msg-text">Your Message <span class="req">*</span></label>
+            <textarea id="msg-text" class="form-control" rows="4" placeholder="Hi! I saw your roommate listing in Shirpur and would like to know if it's available..." required></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="msg-submit-btn">Send Message 🚀</button>
+            <button type="button" class="btn btn-secondary" id="msg-cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REPORT MODAL ==================== -->
+  <div id="report-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <button id="report-modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Report Listing / Profile</h2>
+          <p class="modal-subtitle">Help keep the RCPIT student community safe and trusted.</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form id="report-form">
+          <input type="hidden" id="report-target-type" value="listing">
+          <input type="hidden" id="report-target-id" value="">
+
+          <div class="form-group">
+            <label for="report-reason">Reason for Reporting <span class="req">*</span></label>
+            <select id="report-reason" class="form-control" required>
+              <option value="">Select a reason</option>
+              <option value="Misleading Information / Fake Listing">Misleading Information / Fake Listing</option>
+              <option value="Incorrect Rent or Fees">Incorrect Rent or Fees</option>
+              <option value="Inappropriate Content or Language">Inappropriate Content or Language</option>
+              <option value="Spam or Commercial Broker">Spam or Commercial Broker</option>
+              <option value="Other Policy Violation">Other Policy Violation</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="report-details">Additional Details</label>
+            <textarea id="report-details" class="form-control" rows="3" placeholder="Please provide specific details to help the admin review this report..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-danger" id="report-submit-btn">Submit Report 🚨</button>
+            <button type="button" class="btn btn-secondary" id="report-cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-info">
+        <span class="logo-text">Roommate<strong>Finder</strong> <small class="college-tag">RCPIT Shirpur</small></span>
+        <p class="footer-tagline">Designed for R. C. Patel Institute of Technology students to connect and find shared housing with ease.</p>
+      </div>
+      <div class="footer-note">
+        <p>Roommate Finder System • 80% Complete & Fully Functional Release</p>
+        <p class="footer-sub">SQLite Database • Node.js & Express REST APIs • JWT Authentication • Real Compatibility Engine</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
