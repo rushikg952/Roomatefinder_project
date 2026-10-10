@@ -6,43 +6,41 @@ A full-stack, mobile-responsive web application engineered for students of **R. 
 
 ## 🚀 Key Features (~80% Functional Milestone)
 
-1. **Authentication & Session Security**:
-   - Student registration & secure login with JWT tokens.
-   - Passwords hashed using `bcryptjs`.
-   - Protected API endpoints and authorization checks.
-2. **Student Dashboard**:
+1. **Authentication & SQLite Database Security**:
+   - Real database-backed registration and login powered by native `node:sqlite` (`roommatefinder.db`).
+   - Student registration & secure login with JWT tokens (`/api/auth/login`, `/api/auth/register`, `/api/auth/me`).
+   - Passwords securely hashed with `bcryptjs`.
+   - 1-Click demo account quick-fill login in the UI.
+2. **Dedicated Girls Section (Women's Wing)**:
+   - Segregated female student roommate listings and girls hostels/PGs (Abhilata Building, Sai Shraddha, etc.).
+   - Female safety guidelines: PRN verification, biometric/curfew details, warden contacts, Karvand & College Rd safe zones.
+   - Tailored filters: Area, diet (Pure Veg / Eggetarian), budget slider, verified status.
+   - 1-Click quick listing creation with "Female only" preset.
+3. **Dedicated Boys Section (Men's Wing)**:
+   - Segregated male student roommate listings and boys hostels/PGs (Ajinkya Apartment, Gadhe Villa, etc.).
+   - Boys campus amenities: Bike parking, 5G Wi-Fi, proximity to college gate & mess, night owl study friendly.
+   - Tailored filters: Area, sleep schedule (Night Owl / Early Riser), budget slider.
+   - 1-Click quick listing creation with "Male only" preset.
+4. **Student Dashboard**:
    - Tabbed interface: My Profile, Edit Profile & Living Habits, My Room Listings, Saved Favorites, In-App Messages, Student Verification, and Admin Controls.
-3. **Real Compatibility Matching Algorithm**:
-   - Computes genuine mathematical compatibility scores ($0-100\%$) based on:
-     - Budget ($25\%$)
-     - Location Proximity ($20\%$)
-     - Food/Dietary Habits ($15\%$)
-     - Sleep Schedules ($15\%$)
-     - Study Habits ($15\%$)
-     - Lifestyle ($10\%$)
+5. **Real Compatibility Matching Algorithm**:
+   - Computes genuine mathematical compatibility scores (0–100%) based on Budget (25%), Location (20%), Food (15%), Sleep (15%), Study (15%), and Lifestyle (10%).
    - Visual breakdown bar chart for each category.
-4. **Roommate Listing Lifecycle**:
+6. **Roommate Listing Lifecycle**:
    - Post, edit, delete listings.
    - Toggle availability status (`Available` vs `Occupied`).
    - Filter by room type, gender preference, and rent budget.
-5. **In-App Messaging System**:
+7. **In-App Messaging System**:
    - Real-time message exchanges with incoming/outgoing chat bubbles.
    - Conversation list with latest message preview and unread counters.
-   - Automatic read-receipt updates and message deletion.
-6. **Favorites / Bookmarking**:
+8. **Favorites / Bookmarking**:
    - Persistent bookmarks stored in SQLite database with duplicate prevention.
-7. **RCPIT Student PRN Verification**:
-   - University PRN enrollment verification workflow.
-   - Official **✓ Verified Student** badge displayed across listings and cards.
-8. **Synergistic Search & Multi-Filters**:
-   - Filter by Keyword, Shirpur Area, Gender, Diet, Sleep, Study, Lifestyle, and Budget slider.
-   - Sort by Compatibility, Rent (Asc/Desc), Age, and Newest.
-9. **Community Safety & Reporting**:
-   - Report misleading listings or inappropriate behavior with reason and details.
+9. **RCPIT Student PRN Verification**:
+   - University PRN enrollment verification workflow with **✓ Verified Student** badge.
 10. **Admin Panel**:
     - System metrics, user management, verify/unverify toggle, listing moderation, and report resolution.
-11. **Real SQLite Database & Metrics**:
-    - High-performance SQLite database using Node.js native `DatabaseSync` engine (`node:sqlite`).
+11. **Real SQLite Database Engine**:
+    - High-performance native `node:sqlite` database (`roommatefinder.db`).
     - Live database statistics displayed on hero landing.
 
 ---

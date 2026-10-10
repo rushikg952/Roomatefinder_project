@@ -1788,3 +1788,375 @@ button, input, select, textarea {
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   Girls Section & Boys Section Custom Themes & Wings Portal
+   ========================================================================== */
+
+/* Navbar links with distinct badges */
+.nav-link-girls {
+  color: #db2777 !important;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.nav-link-girls:hover, .nav-link-girls.active {
+  background-color: #fdf2f8 !important;
+  color: #be185d !important;
+}
+
+.nav-link-boys {
+  color: #2563eb !important;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.nav-link-boys:hover, .nav-link-boys.active {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+
+/* Home Wings Portal */
+.wings-portal-section {
+  padding: 3.5rem 0 2rem;
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-page) 100%);
+  border-bottom: 1px solid var(--border-color);
+}
+.wings-portal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.wing-card {
+  position: relative;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.wing-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+.wing-card-girls {
+  border-color: #fbcfe8;
+  background: linear-gradient(145deg, #ffffff 60%, #fdf2f8 100%);
+}
+.wing-card-girls:hover {
+  border-color: #f472b6;
+  box-shadow: 0 20px 25px -5px rgba(244, 114, 182, 0.2), 0 8px 10px -6px rgba(244, 114, 182, 0.1);
+}
+.wing-card-boys {
+  border-color: #bfdbfe;
+  background: linear-gradient(145deg, #ffffff 60%, #eff6ff 100%);
+}
+.wing-card-boys:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 20px 25px -5px rgba(96, 165, 250, 0.2), 0 8px 10px -6px rgba(96, 165, 250, 0.1);
+}
+.wing-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+  width: fit-content;
+}
+.wing-card-girls .wing-card-badge {
+  background-color: #fce7f3;
+  color: #be185d;
+  border: 1px solid #fbcfe8;
+}
+.wing-card-boys .wing-card-badge {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+.wing-card-icon {
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+}
+.wing-card-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+.wing-card-desc {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+.wing-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.wing-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+.wing-card-btn-girls {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+}
+.wing-card-btn-girls:hover {
+  background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(236, 72, 153, 0.4);
+}
+.wing-card-btn-boys {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+.wing-card-btn-boys:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+}
+
+/* Dedicated Wing Section Headers */
+.wing-header-banner {
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.wing-header-girls {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+  border: 1px solid #f9a8d4;
+}
+.wing-header-boys {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+  border: 1px solid #93c5fd;
+}
+.wing-badge-girls {
+  background-color: #be185d;
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+.wing-badge-boys {
+  background-color: #1d4ed8;
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+.wing-safety-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+}
+.wing-safety-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+/* Wing Sub-Tabs */
+.wing-subtabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+.wing-subtab-btn {
+  background: none;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.wing-subtab-btn:hover {
+  color: var(--text-main);
+  background-color: var(--bg-subtle);
+}
+.wing-subtab-btn.active.girls-tab-active {
+  background-color: #fce7f3;
+  color: #be185d;
+  box-shadow: var(--shadow-sm);
+}
+.wing-subtab-btn.active.boys-tab-active {
+  background-color: #dbeafe;
+  color: #1e40af;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Section Switcher Bar inside Search & Listings */
+.section-switch-pills {
+  display: inline-flex;
+  background-color: var(--bg-subtle);
+  padding: 0.35rem;
+  border-radius: var(--radius-md);
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border-color);
+}
+.section-switch-pill {
+  border: none;
+  background: none;
+  padding: 0.45rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+.section-switch-pill:hover {
+  color: var(--text-main);
+}
+.section-switch-pill.active {
+  background-color: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+.section-switch-pill.active.pill-girls {
+  background-color: #fce7f3;
+  color: #be185d;
+  font-weight: 700;
+}
+.section-switch-pill.active.pill-boys {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+/* Demo Accounts Quick-Fill Box */
+.demo-accounts-box {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+.demo-accounts-box-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.demo-accounts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+.demo-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+.demo-pill-btn:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-border);
+  transform: translateX(2px);
+}
+.demo-pill-btn-girls:hover {
+  background-color: #fdf2f8;
+  border-color: #fbcfe8;
+}
+.demo-pill-btn-boys:hover {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+}
+.demo-pill-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .wings-portal-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+

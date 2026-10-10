@@ -30,6 +30,8 @@
       <!-- Navigation Links -->
       <nav class="nav-menu" id="nav-menu">
         <a href="#home" class="nav-link active" data-view="home">Home</a>
+        <a href="#girls" class="nav-link nav-link-girls" data-view="girls">🌸 Girls Section</a>
+        <a href="#boys" class="nav-link nav-link-boys" data-view="boys">⚡ Boys Section</a>
         <a href="#search" class="nav-link" data-view="search">Find Roommates</a>
         <a href="#listings" class="nav-link" data-view="listings">Room Listings</a>
         <a href="#dashboard" class="nav-link auth-required hidden" data-view="dashboard" id="nav-dashboard-link">
@@ -113,6 +115,61 @@
         </div>
       </div>
 
+      <!-- ==================== CAMPUS WINGS: GIRLS & BOYS SECTIONS ==================== -->
+      <section class="wings-portal-section">
+        <div class="container">
+          <div class="text-center">
+            <span class="pill-badge">👥 Dedicated Campus Wings</span>
+            <h2 class="section-title">Explore by Student Section</h2>
+            <p class="section-subtitle">Strictly separated and verified accommodations for RCPIT female & male students.</p>
+          </div>
+
+          <div class="wings-portal-grid">
+            <!-- Girls Wing Card -->
+            <div class="wing-card wing-card-girls">
+              <div class="wing-card-badge">🌸 Girls Section • Women's Wing</div>
+              <div class="wing-card-icon">👧</div>
+              <h3 class="wing-card-title">Girls Accommodations & Roommates</h3>
+              <p class="wing-card-desc">
+                Verified safe zone exclusively for female RCPIT students. Connect with female flatmates, verified girls hostels & PGs around Karvand Naka and College Road.
+              </p>
+              <ul class="wing-feature-list">
+                <li><span>✓</span> 100% Female Flatmate & Roommate Profiles</li>
+                <li><span>✓</span> Verified Girls Hostels (Abhilata, Sai Shraddha, Asusde)</li>
+                <li><span>✓</span> Biometric / CCTV Security, Safe Curfew & Warden Info</li>
+                <li><span>✓</span> Pure Veg & Jain Mess Options Near Campus</li>
+              </ul>
+              <div style="display: flex; gap: 0.75rem;">
+                <button class="wing-card-btn-girls" style="width: 100%;" data-view="girls">
+                  Enter Girls Section 🌸 →
+                </button>
+              </div>
+            </div>
+
+            <!-- Boys Wing Card -->
+            <div class="wing-card wing-card-boys">
+              <div class="wing-card-badge">⚡ Boys Section • Men's Wing</div>
+              <div class="wing-card-icon">👦</div>
+              <h3 class="wing-card-title">Boys Accommodations & Roommates</h3>
+              <p class="wing-card-desc">
+                High-energy living spaces for male RCPIT students. Connect with male flatmates, shared 2/3-sharing flats & budget hostels near Nimzari Naka and campus gates.
+              </p>
+              <ul class="wing-feature-list">
+                <li><span>✓</span> Male Flatmate Matching Across All Engineering Branches</li>
+                <li><span>✓</span> Boys PGs & Apartments (Ajinkya, Gadhe Villa, Main Road)</li>
+                <li><span>✓</span> Bike Parking, High-Speed WiFi & Inverter Power Backup</li>
+                <li><span>✓</span> Night Owl Study & Sports Friendly Common Spaces</li>
+              </ul>
+              <div style="display: flex; gap: 0.75rem;">
+                <button class="wing-card-btn-boys" style="width: 100%;" data-view="boys">
+                  Enter Boys Section ⚡ →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Feature Highlights -->
       <section class="features-section">
         <div class="container">
@@ -155,6 +212,196 @@
       </section>
     </section>
 
+    <!-- ==================== GIRLS SECTION (WOMEN'S WING) ==================== -->
+    <section id="view-girls" class="view-section">
+      <div class="container">
+        <!-- Girls Wing Banner -->
+        <div class="wing-header-banner wing-header-girls">
+          <div class="wing-badge-girls">🌸 RCPIT Girls Section • Women's Wing</div>
+          <h1 class="page-heading">Girls Accommodations & Flatmates</h1>
+          <p class="page-subheading">
+            Strictly female student roommates, verified hostels and safe apartments for RCPIT Shirpur female scholars.
+          </p>
+          <div class="wing-safety-ribbon">
+            <span class="wing-safety-item">🛡️ Verified Female PRNs Only</span>
+            <span class="wing-safety-item">🔒 Warden Contact & Biometric Entry</span>
+            <span class="wing-safety-item">📍 Karvand Naka & College Road Safe Zone</span>
+            <span class="wing-safety-item">🚨 24/7 Campus Security Helpline</span>
+          </div>
+        </div>
+
+        <!-- Girls Subtabs & Post Action -->
+        <div class="wing-subtabs" style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="wing-subtab-btn active girls-tab-active" id="girls-tab-roommates-btn">
+              👭 Female Roommates (<span id="girls-roommates-count">0</span>)
+            </button>
+            <button class="wing-subtab-btn" id="girls-tab-listings-btn">
+              🏠 Girls Hostels & Flats (<span id="girls-listings-count">0</span>)
+            </button>
+          </div>
+          <button class="btn btn-primary btn-sm" id="girls-post-btn" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); border: none;">
+            ➕ Post Girls Room / Requirement
+          </button>
+        </div>
+
+        <!-- Girls Filter Bar -->
+        <div class="filter-card" style="border-color: #fbcfe8; background: #fffcfd;">
+          <div class="filter-row-primary">
+            <div class="filter-group flex-2">
+              <label for="girls-filter-keyword">Search Keyword / Name</label>
+              <input type="text" id="girls-filter-keyword" class="form-control" placeholder="Search female students, building name, branch...">
+            </div>
+            <div class="filter-group">
+              <label for="girls-filter-location">Shirpur Area</label>
+              <select id="girls-filter-location" class="form-control">
+                <option value="All">All Areas</option>
+                <option value="Karvand Naka">Karvand Naka</option>
+                <option value="College Road">College Road</option>
+                <option value="Nimzari Naka">Nimzari Naka</option>
+                <option value="Main Road">Main Road</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="girls-filter-food">Dietary Habit</label>
+              <select id="girls-filter-food" class="form-control">
+                <option value="All">All Diets</option>
+                <option value="Pure Veg">Pure Veg</option>
+                <option value="Eggetarian">Eggetarian</option>
+                <option value="Non-Veg">Non-Veg</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="girls-filter-budget">Max Budget: ₹<span id="girls-budget-display">10,000</span></label>
+              <input type="range" id="girls-filter-budget" class="form-range" min="2000" max="15000" step="500" value="10000">
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #fce7f3;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; cursor: pointer;">
+              <input type="checkbox" id="girls-filter-verified" checked>
+              <span>✓ Verified Students Only</span>
+            </label>
+            <button class="btn btn-outline btn-sm" id="girls-reset-filter-btn">Reset Filters</button>
+          </div>
+        </div>
+
+        <!-- Girls Roommates Grid Container -->
+        <div id="girls-roommates-container">
+          <div class="roommates-grid" id="girls-roommates-grid"></div>
+          <div id="girls-roommates-empty" class="no-results hidden">
+            <div class="no-results-icon">🌸</div>
+            <h3>No female roommates match current filters</h3>
+            <p>Try resetting filters or post your own roommate requirement!</p>
+          </div>
+        </div>
+
+        <!-- Girls Listings Grid Container -->
+        <div id="girls-listings-container" class="hidden">
+          <div class="listings-grid" id="girls-listings-grid"></div>
+          <div id="girls-listings-empty" class="no-results hidden">
+            <div class="no-results-icon">🏠</div>
+            <h3>No girls hostels or rooms match current filters</h3>
+            <p>Try clearing filters or post a new room opening for girls!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== BOYS SECTION (MEN'S WING) ==================== -->
+    <section id="view-boys" class="view-section">
+      <div class="container">
+        <!-- Boys Wing Banner -->
+        <div class="wing-header-banner wing-header-boys">
+          <div class="wing-badge-boys">⚡ RCPIT Boys Section • Men's Wing</div>
+          <h1 class="page-heading">Boys Accommodations & Flatmates</h1>
+          <p class="page-subheading">
+            Connecting male RCPIT students with compatible flatmates, shared flats, and budget hostels in Shirpur.
+          </p>
+          <div class="wing-safety-ribbon">
+            <span class="wing-safety-item">🛵 Dedicated Bike Parking</span>
+            <span class="wing-safety-item">📶 High-Speed Wi-Fi & Power Backup</span>
+            <span class="wing-safety-item">📍 Nimzari Naka, Subhash Nagar & College Gate</span>
+            <span class="wing-safety-item">⚽ Sports & Night Study Friendly</span>
+          </div>
+        </div>
+
+        <!-- Boys Subtabs & Post Action -->
+        <div class="wing-subtabs" style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="wing-subtab-btn active boys-tab-active" id="boys-tab-roommates-btn">
+              👬 Male Roommates (<span id="boys-roommates-count">0</span>)
+            </button>
+            <button class="wing-subtab-btn" id="boys-tab-listings-btn">
+              🏠 Boys Hostels & Flats (<span id="boys-listings-count">0</span>)
+            </button>
+          </div>
+          <button class="btn btn-primary btn-sm" id="boys-post-btn" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none;">
+            ➕ Post Boys Room / Requirement
+          </button>
+        </div>
+
+        <!-- Boys Filter Bar -->
+        <div class="filter-card" style="border-color: #bfdbfe; background: #fcfdff;">
+          <div class="filter-row-primary">
+            <div class="filter-group flex-2">
+              <label for="boys-filter-keyword">Search Keyword / Name</label>
+              <input type="text" id="boys-filter-keyword" class="form-control" placeholder="Search male students, building, department...">
+            </div>
+            <div class="filter-group">
+              <label for="boys-filter-location">Shirpur Area</label>
+              <select id="boys-filter-location" class="form-control">
+                <option value="All">All Areas</option>
+                <option value="Nimzari Naka">Nimzari Naka</option>
+                <option value="Subhash Nagar">Subhash Nagar</option>
+                <option value="Karvand Naka">Karvand Naka</option>
+                <option value="Main Road">Main Road</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="boys-filter-sleep">Sleep Schedule</label>
+              <select id="boys-filter-sleep" class="form-control">
+                <option value="All">All Schedules</option>
+                <option value="Night Owl">Night Owl & Studious</option>
+                <option value="Early Riser">Early Riser</option>
+                <option value="Flexible">Flexible</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="boys-filter-budget">Max Budget: ₹<span id="boys-budget-display">10,000</span></label>
+              <input type="range" id="boys-filter-budget" class="form-range" min="2000" max="15000" step="500" value="10000">
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #dbeafe;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; cursor: pointer;">
+              <input type="checkbox" id="boys-filter-verified">
+              <span>✓ Verified Students Only</span>
+            </label>
+            <button class="btn btn-outline btn-sm" id="boys-reset-filter-btn">Reset Filters</button>
+          </div>
+        </div>
+
+        <!-- Boys Roommates Grid Container -->
+        <div id="boys-roommates-container">
+          <div class="roommates-grid" id="boys-roommates-grid"></div>
+          <div id="boys-roommates-empty" class="no-results hidden">
+            <div class="no-results-icon">⚡</div>
+            <h3>No male roommates match current filters</h3>
+            <p>Try resetting filters or post your own roommate requirement!</p>
+          </div>
+        </div>
+
+        <!-- Boys Listings Grid Container -->
+        <div id="boys-listings-container" class="hidden">
+          <div class="listings-grid" id="boys-listings-grid"></div>
+          <div id="boys-listings-empty" class="no-results hidden">
+            <div class="no-results-icon">🏠</div>
+            <h3>No boys hostels or rooms match current filters</h3>
+            <p>Try clearing filters or post a new room opening for boys!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== SECTION 2: ROOMMATE & LISTING SEARCH ==================== -->
     <section id="view-search" class="view-section">
       <div class="container">
@@ -167,6 +414,13 @@
             <button class="btn btn-outline" id="switch-to-listings-btn" data-view="listings">🏢 View Room Listings</button>
             <button class="btn btn-primary" id="open-create-listing-btn">+ Post a Listing</button>
           </div>
+        </div>
+
+        <!-- Section Filter Quick Switcher -->
+        <div class="section-switch-pills">
+          <button type="button" class="section-switch-pill active" id="search-pill-all" data-gender-choice="All">🏢 All Students</button>
+          <button type="button" class="section-switch-pill pill-girls" id="search-pill-girls" data-gender-choice="Female">🌸 Girls Section Only</button>
+          <button type="button" class="section-switch-pill pill-boys" id="search-pill-boys" data-gender-choice="Male">⚡ Boys Section Only</button>
         </div>
 
         <!-- Filter Controls -->
@@ -310,6 +564,13 @@
             <p class="page-subheading">Accommodations posted by RCPIT students seeking flatmates.</p>
           </div>
           <button class="btn btn-primary" id="listings-view-create-btn">+ Post a Listing</button>
+        </div>
+
+        <!-- Section Filter Quick Switcher -->
+        <div class="section-switch-pills">
+          <button type="button" class="section-switch-pill active" id="listing-pill-all" data-gender-choice="All">🏢 All Accommodations</button>
+          <button type="button" class="section-switch-pill pill-girls" id="listing-pill-girls" data-gender-choice="Female">🌸 Girls Section (Female Only)</button>
+          <button type="button" class="section-switch-pill pill-boys" id="listing-pill-boys" data-gender-choice="Male">⚡ Boys Section (Male Only)</button>
         </div>
 
         <!-- Listings Filter Bar -->
@@ -830,11 +1091,25 @@
             <button type="submit" class="btn btn-primary btn-block" id="login-submit-btn">Sign In</button>
           </div>
 
-          <p class="auth-demo-hint">
-            <strong>Demo Accounts:</strong><br>
-            • Student: <code>maya.patel@rcpit.ac.in</code> / <code>password123</code><br>
-            • Admin: <code>admin@rcpit.ac.in</code> / <code>admin123</code>
-          </p>
+          <div class="demo-accounts-box">
+            <div class="demo-accounts-box-title">
+              <span>⚡ 1-Click Database Login (Demo Accounts):</span>
+            </div>
+            <div class="demo-accounts-grid">
+              <button type="button" class="demo-pill-btn demo-pill-btn-girls" data-demo-email="maya.patel@rcpit.ac.in" data-demo-pass="password123">
+                <span>🌸 <strong>Maya Patel</strong> <small>(maya.patel@rcpit.ac.in)</small></span>
+                <span class="demo-pill-role">Girls Wing Student</span>
+              </button>
+              <button type="button" class="demo-pill-btn demo-pill-btn-boys" data-demo-email="ajinkya.patil@rcpit.ac.in" data-demo-pass="password123">
+                <span>⚡ <strong>Ajinkya Patil</strong> <small>(ajinkya.patil@rcpit.ac.in)</small></span>
+                <span class="demo-pill-role">Boys Wing Student</span>
+              </button>
+              <button type="button" class="demo-pill-btn" data-demo-email="admin@rcpit.ac.in" data-demo-pass="admin123">
+                <span>🛡️ <strong>Housing Admin</strong> <small>(admin@rcpit.ac.in)</small></span>
+                <span class="demo-pill-role">Platform Admin</span>
+              </button>
+            </div>
+          </div>
         </form>
 
         <!-- Register Form -->
@@ -863,12 +1138,12 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label for="reg-gender">Gender <span class="req">*</span></label>
+              <label for="reg-gender">Gender & Wing <span class="req">*</span></label>
               <select id="reg-gender" class="form-control" required>
-                <option value="">Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Non-binary">Non-binary</option>
+                <option value="">Select Wing / Gender</option>
+                <option value="Female">👧 Female (Girls Section)</option>
+                <option value="Male">👦 Male (Boys Section)</option>
+                <option value="Other">Other / Non-binary</option>
               </select>
             </div>
             <div class="form-group">

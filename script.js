@@ -466,7 +466,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (endpoint.startsWith('/profiles')) {
-      const peers = localUsers.filter(u => !currentUser || u.id !== currentUser.id);
+      let peers = localUsers.filter(u => !currentUser || u.id !== currentUser.id);
+      try {
+        const url = new URL('http://dummy' + endpoint);
+        const gender = url.searchParams.get('gender');
+        if (gender && gender !== 'All' && gender !== 'all') {
+          peers = peers.filter(p => (p.gender || '').toLowerCase() === gender.toLowerCase());
+        }
+      } catch (e) {}
+
       const scored = peers.map(p => {
         const comp = calculateClientCompatibility(currentUser || { budget: 5000, location: 'Shirpur' }, p);
         return { ...p, compatibilityScore: comp.score, compatibilityBreakdown: comp.breakdown };
@@ -513,7 +521,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (endpoint.startsWith('/listings') && method === 'GET') {
-      return { success: true, count: localListings.length, listings: localListings };
+      let resListings = localListings;
+      try {
+        const url = new URL('http://dummy' + endpoint);
+        const gender = url.searchParams.get('gender');
+        if (gender && gender !== 'All' && gender !== 'all') {
+          if (gender.toLowerCase().includes('female') || gender.toLowerCase().includes('girl')) {
+            resListings = resListings.filter(l => (l.preferred_gender || '').toLowerCase().includes('female') || (l.preferred_gender || '').toLowerCase() === 'any');
+          } else if (gender.toLowerCase().includes('male') || gender.toLowerCase().includes('boy')) {
+            resListings = resListings.filter(l => (l.preferred_gender || '').toLowerCase().includes('male') || (l.preferred_gender || '').toLowerCase() === 'any');
+          }
+        }
+      } catch (e) {}
+      return { success: true, count: resListings.length, listings: resListings };
     }
 
     // Favorites endpoints
@@ -718,6 +738,10 @@ document.addEventListener('DOMContentLoaded', () => {
       loadProfiles();
     } else if (viewName === 'listings') {
       loadListings();
+    } else if (viewName === 'girls') {
+      loadGirlsSection();
+    } else if (viewName === 'boys') {
+      loadBoysSection();
     } else if (viewName === 'dashboard') {
       loadDashboardData();
     } else if (viewName === 'home') {
@@ -727,7 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleHashRouting() {
     const hash = window.location.hash.replace('#', '').trim().toLowerCase();
-    if (['home', 'search', 'listings', 'dashboard'].includes(hash)) {
+    if (['home', 'search', 'listings', 'dashboard', 'girls', 'boys'].includes(hash)) {
       switchView(hash, false);
     } else {
       switchView('home', false);
@@ -736,12 +760,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('hashchange', handleHashRouting);
 
-  directViewTriggers.forEach(element => {
-    element.addEventListener('click', (e) => {
+  // Delegate data-view clicks across the entire document
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-view]');
+    if (trigger) {
       e.preventDefault();
-      const targetView = element.getAttribute('data-view');
+      const targetView = trigger.getAttribute('data-view');
       if (targetView) switchView(targetView);
-    });
+    }
   });
 
   if (mobileToggle) {
@@ -859,6 +885,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 1-Click Demo Database Login
+  document.querySelectorAll('.demo-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const email = btn.getAttribute('data-demo-email');
+      const pass = btn.getAttribute('data-demo-pass');
+      if (email && pass) {
+        const emailInput = document.getElementById('login-email');
+        const passInput = document.getElementById('login-password');
+        if (emailInput && passInput) {
+          emailInput.value = email;
+          passInput.value = pass;
+          showToast(`Loaded demo credentials for ${email}. Signing in...`, 'info');
+          loginForm.requestSubmit();
+        }
+      }
+    });
+  });
+
   // Register form submit
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -961,19 +1005,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function renderRoommateCards(profiles) {
-    roommatesGrid.innerHTML = '';
+  function renderRoommateCards(profiles, targetGrid = roommatesGrid, targetEmpty = noResultsBox, targetCount = resultsCount) {
+    if (!targetGrid) return;
+    targetGrid.innerHTML = '';
 
     if (profiles.length === 0) {
-      roommatesGrid.classList.add('hidden');
-      noResultsBox.classList.remove('hidden');
-      resultsCount.textContent = '0 roommates found matching filters.';
+      targetGrid.classList.add('hidden');
+      if (targetEmpty) targetEmpty.classList.remove('hidden');
+      if (targetCount) targetCount.textContent = '0 roommates found matching filters.';
       return;
     }
 
-    roommatesGrid.classList.remove('hidden');
-    noResultsBox.classList.add('hidden');
-    resultsCount.textContent = `Showing ${profiles.length} available ${profiles.length === 1 ? 'roommate' : 'roommates'}`;
+    targetGrid.classList.remove('hidden');
+    if (targetEmpty) targetEmpty.classList.add('hidden');
+    if (targetCount) targetCount.textContent = `Showing ${profiles.length} available ${profiles.length === 1 ? 'roommate' : 'roommates'}`;
 
     profiles.forEach(profile => {
       const card = document.createElement('div');
@@ -1024,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.querySelector('.view-profile-btn').addEventListener('click', () => openProfileModal(profile));
       card.querySelector('.msg-peer-btn').addEventListener('click', () => openMessageModal(profile.id, profile.full_name));
 
-      roommatesGrid.appendChild(card);
+      targetGrid.appendChild(card);
     });
   }
 
@@ -1087,19 +1132,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function renderListingCards(listings) {
-    listingsGrid.innerHTML = '';
+  function renderListingCards(listings, targetGrid = listingsGrid, targetEmpty = noListingsBox, targetCount = listingsResultsCount) {
+    if (!targetGrid) return;
+    targetGrid.innerHTML = '';
 
     if (listings.length === 0) {
-      listingsGrid.classList.add('hidden');
-      noListingsBox.classList.remove('hidden');
-      listingsResultsCount.textContent = '0 room listings found.';
+      targetGrid.classList.add('hidden');
+      if (targetEmpty) targetEmpty.classList.remove('hidden');
+      if (targetCount) targetCount.textContent = '0 room listings found.';
       return;
     }
 
-    listingsGrid.classList.remove('hidden');
-    noListingsBox.classList.add('hidden');
-    listingsResultsCount.textContent = `Showing ${listings.length} available room ${listings.length === 1 ? 'listing' : 'listings'}`;
+    targetGrid.classList.remove('hidden');
+    if (targetEmpty) targetEmpty.classList.add('hidden');
+    if (targetCount) targetCount.textContent = `Showing ${listings.length} available room ${listings.length === 1 ? 'listing' : 'listings'}`;
 
     listings.forEach(listing => {
       const card = document.createElement('div');
@@ -1180,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      listingsGrid.appendChild(card);
+      targetGrid.appendChild(card);
     });
   }
 
@@ -1201,6 +1247,267 @@ document.addEventListener('DOMContentLoaded', () => {
     listingFilterGender.value = 'all';
     listingFilterSort.value = 'newest';
     loadListings();
+  });
+
+  // ==========================================================================
+  // 9b. Girls Section & Boys Section Handlers
+  // ==========================================================================
+  const girlsRoommatesGrid = document.getElementById('girls-roommates-grid');
+  const girlsRoommatesEmpty = document.getElementById('girls-roommates-empty');
+  const girlsRoommatesCount = document.getElementById('girls-roommates-count');
+  const girlsListingsGrid = document.getElementById('girls-listings-grid');
+  const girlsListingsEmpty = document.getElementById('girls-listings-empty');
+  const girlsListingsCount = document.getElementById('girls-listings-count');
+  const girlsRoommatesContainer = document.getElementById('girls-roommates-container');
+  const girlsListingsContainer = document.getElementById('girls-listings-container');
+  const girlsTabRoommatesBtn = document.getElementById('girls-tab-roommates-btn');
+  const girlsTabListingsBtn = document.getElementById('girls-tab-listings-btn');
+  const girlsPostBtn = document.getElementById('girls-post-btn');
+  const girlsFilterKeyword = document.getElementById('girls-filter-keyword');
+  const girlsFilterLocation = document.getElementById('girls-filter-location');
+  const girlsFilterFood = document.getElementById('girls-filter-food');
+  const girlsFilterBudget = document.getElementById('girls-filter-budget');
+  const girlsBudgetDisplay = document.getElementById('girls-budget-display');
+  const girlsFilterVerified = document.getElementById('girls-filter-verified');
+  const girlsResetFilterBtn = document.getElementById('girls-reset-filter-btn');
+
+  const boysRoommatesGrid = document.getElementById('boys-roommates-grid');
+  const boysRoommatesEmpty = document.getElementById('boys-roommates-empty');
+  const boysRoommatesCount = document.getElementById('boys-roommates-count');
+  const boysListingsGrid = document.getElementById('boys-listings-grid');
+  const boysListingsEmpty = document.getElementById('boys-listings-empty');
+  const boysListingsCount = document.getElementById('boys-listings-count');
+  const boysRoommatesContainer = document.getElementById('boys-roommates-container');
+  const boysListingsContainer = document.getElementById('boys-listings-container');
+  const boysTabRoommatesBtn = document.getElementById('boys-tab-roommates-btn');
+  const boysTabListingsBtn = document.getElementById('boys-tab-listings-btn');
+  const boysPostBtn = document.getElementById('boys-post-btn');
+  const boysFilterKeyword = document.getElementById('boys-filter-keyword');
+  const boysFilterLocation = document.getElementById('boys-filter-location');
+  const boysFilterSleep = document.getElementById('boys-filter-sleep');
+  const boysFilterBudget = document.getElementById('boys-filter-budget');
+  const boysBudgetDisplay = document.getElementById('boys-budget-display');
+  const boysFilterVerified = document.getElementById('boys-filter-verified');
+  const boysResetFilterBtn = document.getElementById('boys-reset-filter-btn');
+
+  async function loadGirlsSection() {
+    // 1. Fetch female roommates
+    const profileParams = new URLSearchParams();
+    profileParams.append('gender', 'Female');
+    if (girlsFilterKeyword && girlsFilterKeyword.value.trim()) profileParams.append('keyword', girlsFilterKeyword.value.trim());
+    if (girlsFilterLocation && girlsFilterLocation.value !== 'All') profileParams.append('location', girlsFilterLocation.value);
+    if (girlsFilterFood && girlsFilterFood.value !== 'All') profileParams.append('food_pref', girlsFilterFood.value);
+    if (girlsFilterBudget) profileParams.append('maxBudget', girlsFilterBudget.value);
+    if (girlsFilterVerified && girlsFilterVerified.checked) profileParams.append('is_verified', '1');
+
+    try {
+      const data = await apiRequest(`/profiles?${profileParams.toString()}`);
+      const profiles = (data.profiles || []).filter(p => (p.gender || '').toLowerCase() === 'female');
+      if (girlsRoommatesCount) girlsRoommatesCount.textContent = profiles.length;
+      renderRoommateCards(profiles, girlsRoommatesGrid, girlsRoommatesEmpty, null);
+    } catch (err) {
+      console.error('Error fetching girls profiles:', err);
+    }
+
+    // 2. Fetch girls room listings
+    const listingParams = new URLSearchParams();
+    listingParams.append('gender', 'Female');
+    if (girlsFilterKeyword && girlsFilterKeyword.value.trim()) listingParams.append('keyword', girlsFilterKeyword.value.trim());
+    if (girlsFilterLocation && girlsFilterLocation.value !== 'All') listingParams.append('location', girlsFilterLocation.value);
+    if (girlsFilterBudget) listingParams.append('max_budget', girlsFilterBudget.value);
+
+    try {
+      const data = await apiRequest(`/listings?${listingParams.toString()}`);
+      const listings = (data.listings || []).filter(l => (l.preferred_gender || '').toLowerCase().includes('female') || (l.preferred_gender || '').toLowerCase() === 'any');
+      if (girlsListingsCount) girlsListingsCount.textContent = listings.length;
+      renderListingCards(listings, girlsListingsGrid, girlsListingsEmpty, null);
+    } catch (err) {
+      console.error('Error fetching girls listings:', err);
+    }
+  }
+
+  async function loadBoysSection() {
+    // 1. Fetch male roommates
+    const profileParams = new URLSearchParams();
+    profileParams.append('gender', 'Male');
+    if (boysFilterKeyword && boysFilterKeyword.value.trim()) profileParams.append('keyword', boysFilterKeyword.value.trim());
+    if (boysFilterLocation && boysFilterLocation.value !== 'All') profileParams.append('location', boysFilterLocation.value);
+    if (boysFilterSleep && boysFilterSleep.value !== 'All') profileParams.append('sleep_pref', boysFilterSleep.value);
+    if (boysFilterBudget) profileParams.append('maxBudget', boysFilterBudget.value);
+    if (boysFilterVerified && boysFilterVerified.checked) profileParams.append('is_verified', '1');
+
+    try {
+      const data = await apiRequest(`/profiles?${profileParams.toString()}`);
+      const profiles = (data.profiles || []).filter(p => (p.gender || '').toLowerCase() === 'male');
+      if (boysRoommatesCount) boysRoommatesCount.textContent = profiles.length;
+      renderRoommateCards(profiles, boysRoommatesGrid, boysRoommatesEmpty, null);
+    } catch (err) {
+      console.error('Error fetching boys profiles:', err);
+    }
+
+    // 2. Fetch boys room listings
+    const listingParams = new URLSearchParams();
+    listingParams.append('gender', 'Male');
+    if (boysFilterKeyword && boysFilterKeyword.value.trim()) listingParams.append('keyword', boysFilterKeyword.value.trim());
+    if (boysFilterLocation && boysFilterLocation.value !== 'All') listingParams.append('location', boysFilterLocation.value);
+    if (boysFilterBudget) listingParams.append('max_budget', boysFilterBudget.value);
+
+    try {
+      const data = await apiRequest(`/listings?${listingParams.toString()}`);
+      const listings = (data.listings || []).filter(l => (l.preferred_gender || '').toLowerCase().includes('male') || (l.preferred_gender || '').toLowerCase() === 'any');
+      if (boysListingsCount) boysListingsCount.textContent = listings.length;
+      renderListingCards(listings, boysListingsGrid, boysListingsEmpty, null);
+    } catch (err) {
+      console.error('Error fetching boys listings:', err);
+    }
+  }
+
+  // Setup Girls & Boys subtabs
+  if (girlsTabRoommatesBtn && girlsTabListingsBtn) {
+    girlsTabRoommatesBtn.addEventListener('click', () => {
+      girlsTabRoommatesBtn.classList.add('active', 'girls-tab-active');
+      girlsTabListingsBtn.classList.remove('active', 'girls-tab-active');
+      girlsRoommatesContainer.classList.remove('hidden');
+      girlsListingsContainer.classList.add('hidden');
+    });
+    girlsTabListingsBtn.addEventListener('click', () => {
+      girlsTabListingsBtn.classList.add('active', 'girls-tab-active');
+      girlsTabRoommatesBtn.classList.remove('active', 'girls-tab-active');
+      girlsListingsContainer.classList.remove('hidden');
+      girlsRoommatesContainer.classList.add('hidden');
+    });
+  }
+
+  if (boysTabRoommatesBtn && boysTabListingsBtn) {
+    boysTabRoommatesBtn.addEventListener('click', () => {
+      boysTabRoommatesBtn.classList.add('active', 'boys-tab-active');
+      boysTabListingsBtn.classList.remove('active', 'boys-tab-active');
+      boysRoommatesContainer.classList.remove('hidden');
+      boysListingsContainer.classList.add('hidden');
+    });
+    boysTabListingsBtn.addEventListener('click', () => {
+      boysTabListingsBtn.classList.add('active', 'boys-tab-active');
+      boysTabRoommatesBtn.classList.remove('active', 'boys-tab-active');
+      boysListingsContainer.classList.remove('hidden');
+      boysRoommatesContainer.classList.add('hidden');
+    });
+  }
+
+  // Girls filters listeners
+  if (girlsFilterBudget && girlsBudgetDisplay) {
+    girlsFilterBudget.addEventListener('input', () => {
+      girlsBudgetDisplay.textContent = Number(girlsFilterBudget.value).toLocaleString();
+      loadGirlsSection();
+    });
+  }
+  [girlsFilterKeyword, girlsFilterLocation, girlsFilterFood, girlsFilterVerified].forEach(el => {
+    if (el) {
+      el.addEventListener('change', loadGirlsSection);
+      if (el.tagName === 'INPUT' && el.type === 'text') {
+        let debounce;
+        el.addEventListener('input', () => {
+          clearTimeout(debounce);
+          debounce = setTimeout(loadGirlsSection, 300);
+        });
+      }
+    }
+  });
+  if (girlsResetFilterBtn) {
+    girlsResetFilterBtn.addEventListener('click', () => {
+      if (girlsFilterKeyword) girlsFilterKeyword.value = '';
+      if (girlsFilterLocation) girlsFilterLocation.value = 'All';
+      if (girlsFilterFood) girlsFilterFood.value = 'All';
+      if (girlsFilterBudget) {
+        girlsFilterBudget.value = '10000';
+        if (girlsBudgetDisplay) girlsBudgetDisplay.textContent = '10,000';
+      }
+      if (girlsFilterVerified) girlsFilterVerified.checked = true;
+      loadGirlsSection();
+    });
+  }
+
+  // Boys filters listeners
+  if (boysFilterBudget && boysBudgetDisplay) {
+    boysFilterBudget.addEventListener('input', () => {
+      boysBudgetDisplay.textContent = Number(boysFilterBudget.value).toLocaleString();
+      loadBoysSection();
+    });
+  }
+  [boysFilterKeyword, boysFilterLocation, boysFilterSleep, boysFilterVerified].forEach(el => {
+    if (el) {
+      el.addEventListener('change', loadBoysSection);
+      if (el.tagName === 'INPUT' && el.type === 'text') {
+        let debounce;
+        el.addEventListener('input', () => {
+          clearTimeout(debounce);
+          debounce = setTimeout(loadBoysSection, 300);
+        });
+      }
+    }
+  });
+  if (boysResetFilterBtn) {
+    boysResetFilterBtn.addEventListener('click', () => {
+      if (boysFilterKeyword) boysFilterKeyword.value = '';
+      if (boysFilterLocation) boysFilterLocation.value = 'All';
+      if (boysFilterSleep) boysFilterSleep.value = 'All';
+      if (boysFilterBudget) {
+        boysFilterBudget.value = '10000';
+        if (boysBudgetDisplay) boysBudgetDisplay.textContent = '10,000';
+      }
+      if (boysFilterVerified) boysFilterVerified.checked = false;
+      loadBoysSection();
+    });
+  }
+
+  // Girls & Boys Post Buttons
+  if (girlsPostBtn) {
+    girlsPostBtn.addEventListener('click', () => {
+      if (!currentUser) {
+        openAuthModal('login');
+        showToast('Please sign in to post a listing.', 'info');
+        return;
+      }
+      openListingModal();
+      const prefGenderSelect = document.getElementById('listing-pref-gender');
+      if (prefGenderSelect) prefGenderSelect.value = 'Female only';
+    });
+  }
+  if (boysPostBtn) {
+    boysPostBtn.addEventListener('click', () => {
+      if (!currentUser) {
+        openAuthModal('login');
+        showToast('Please sign in to post a listing.', 'info');
+        return;
+      }
+      openListingModal();
+      const prefGenderSelect = document.getElementById('listing-pref-gender');
+      if (prefGenderSelect) prefGenderSelect.value = 'Male only';
+    });
+  }
+
+  // Section switcher pills on search and listings views
+  document.querySelectorAll('.section-switch-pill[data-gender-choice]').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const genderChoice = pill.getAttribute('data-gender-choice');
+      const isSearchPill = pill.id.startsWith('search-pill');
+      if (isSearchPill) {
+        document.querySelectorAll('#view-search .section-switch-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        if (filterGender) {
+          filterGender.value = genderChoice.toLowerCase() === 'all' ? 'all' : genderChoice;
+          loadProfiles();
+        }
+      } else {
+        document.querySelectorAll('#view-listings .section-switch-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        if (listingFilterGender) {
+          if (genderChoice.toLowerCase() === 'all') listingFilterGender.value = 'all';
+          else if (genderChoice.toLowerCase().includes('female')) listingFilterGender.value = 'Female only';
+          else if (genderChoice.toLowerCase().includes('male')) listingFilterGender.value = 'Male only';
+          loadListings();
+        }
+      }
+    });
   });
 
   // ==========================================================================
