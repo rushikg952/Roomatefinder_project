@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Roommate Finder System for RCPIT Shirpur Students",
   "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "start": "node server.js",
+    "build": "npm install",
     "seed": "node seed.js",
     "test": "node test/test_suite.js"
   },

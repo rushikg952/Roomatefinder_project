@@ -302,4 +302,8 @@ async function seed() {
   console.log('Database successfully seeded with realistic RCPIT Shirpur data!');
 }
 
-seed();
+if (require.main === module) {
+  seed();
+}
+
+module.exports = seed;

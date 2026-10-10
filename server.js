@@ -69,9 +69,21 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Auto-seed if database is fresh or empty (e.g. on Render deployment)
+try {
+  const row = db.prepare('SELECT COUNT(*) as count FROM users').get();
+  if (!row || row.count === 0) {
+    console.log('Database empty on startup. Automatically seeding initial data...');
+    const seed = require('./seed');
+    seed();
+  }
+} catch (seedErr) {
+  console.warn('Initial seed check notice:', seedErr.message);
+}
+
 // Start server if not imported by tests
 if (require.main === module) {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`=======================================================`);
     console.log(` Roommate Finder System – RCPIT Shirpur Backend Active `);
     console.log(` Server running on: http://localhost:${PORT}          `);
